@@ -1,44 +1,38 @@
 //Fast_slow
 //
-// Letting the LED blink in different speed according to the pins number 2/3.
+// Letting the LED blink faster/slower in speed according to the volume.
 
-int slowPin = 2;
-int fastPin = 3;
+  // variables 
+// pin numbers
+int pin2=2;
+int pin3=3;
+
+int volume=100;       // speed increase/decrease
+int blinkingT=1000; // blinking Time
 
 void setup() {
   // LED_BUILTIN: HIGH=ON, LOW=OFF.
   // PINS:LOW=plugged in, HIGH=unplugged.
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(slowPin, INPUT_PULLUP);     // pin2 blinking slowly 1000ms
-  pinMode(fastPin, INPUT_PULLUP);     // pin3 blinking fast 500ms
-}
+  pinMode(pin2, INPUT_PULLUP);     // pin2 blinking slowly.
+  pinMode(pin3, INPUT_PULLUP);     // pin3 blinking fast.
+} 
 
 void loop() {
-  // if pin2 plugged in, LED should blink slower (1000ms, wait 1000ms).
-      (digitalRead(slowPin) == LOW) {
-
-  if (slowPin == LOW)
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(1000);
-      digitalWrite(LED_BUILTIN, LOW);
-      delay(1000);
+    // blinking function
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(blinkingT);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(blinkingT);
+    
+  // Pin2 slow
+  // if pin2 plugged in then the delay/wait time will increase.
+    if (digitalRead(pin2) == LOW) {
+    blinkingT=blinkingT+volume;
   }
-
-  // if pin2 unplugged, Led is off.
-  if (digitalRead(slowPin) == HIGH) {
-      digitalWrite(LED_BUILTIN, LOW);
-  }
-
-  // if pin3 plugged in, LED should blink faster (500ms, wait 500ms).
-  if (digitalRead(fastPin) == LOW); {
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(500);
-      digitalWrite(LED_BUILTIN, LOW);
-      delay(500);
-  }
-
-  // if pin3 unplugged, Led is off.
-  if (digitalRead(fastPin) == HIGH) {
-      digitalWrite(LED_BUILTIN, LOW);
+  // Pin3 fast
+  // if pin3 plugged in then the delay/wait time will decrease.
+    if (digitalRead(pin3) == LOW) {
+    blinkingT=blinkingT-volume;
   }
 }
